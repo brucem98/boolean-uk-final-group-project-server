@@ -22,7 +22,7 @@ app.use(morgan("dev"));
 
 /* SETUP ROUTES */
 
-app.use("/competitions", competitionsRouter);
+app.use("/competition", competitionsRouter);
 app.use("/dogs", dogsRouter)
 app.get("*", (req, res) => {
   res.json({ ok: true })
