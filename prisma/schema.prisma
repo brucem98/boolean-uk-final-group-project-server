@@ -7,3 +7,14 @@ datasource db {
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
+
+model competition {
+  id             Int      @id @default(autoincrement())
+  exhibitionName String   @db.VarChar(255)
+  date           DateTime
+  prizePool      Int
+  difficulty     String   @db.VarChar(255)
+  location       String
+  capacity       Int
+  img            String
+}
