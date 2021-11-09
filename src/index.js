@@ -6,6 +6,10 @@ const morgan = require("morgan")
 
 const app = express()
 
+/*IMPORT ROUTERS */
+
+const competitionsRouter = require("./resources/competition/router")
+
 /* SETUP MIDDLEWARE */
 
 app.disable("x-powered-by")
@@ -17,6 +21,7 @@ app.use(morgan("dev"))
 
 /* SETUP ROUTES */
 
+app.use("/competitions", competitionsRouter)
 app.get("*", (req, res) => {
   res.json({ ok: true })
 })
