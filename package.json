@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/brucem98/boolean-uk-final-group-project-server#readme",
   "dependencies": {
-    "@prisma/client": "^3.4.2",
+    "@prisma/client": "^3.2.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -26,6 +26,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.14",
-    "prisma": "^3.4.1"
+    "prisma": "^3.2.1"
   }
 }

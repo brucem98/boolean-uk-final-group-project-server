@@ -7,13 +7,34 @@ datasource db {
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
+
 model Competition {
-  id             Int      @id @default(autoincrement())
-  exhibitionName String   @db.VarChar(255)
+  id             Int                  @id @default(autoincrement())
+  exhibitionName String               @db.VarChar(255)
   date           DateTime
   prizePool      Int
-  difficulty     String   @db.VarChar(255)
+  difficulty     String               @db.VarChar(255)
   location       String
   capacity       Int
   img            String
+  dogs           DogsOnCompetitions[]
+}
+
+model Dog {
+  id           Int                  @id @default(autoincrement())
+  name         String               @db.VarChar(255)
+  age          Int
+  breed        String               @db.VarChar(255)
+  img          String
+  shotStatus   Boolean
+  competitions DogsOnCompetitions[]
+}
+
+model DogsOnCompetitions {
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  competitionId Int
+  dog           Dog         @relation(fields: [dogId], references: [id])
+  dogId         Int
+
+  @@id([competitionId, dogId])
 }
