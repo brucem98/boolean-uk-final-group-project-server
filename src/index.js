@@ -25,8 +25,8 @@ app.use(morgan("dev"));
 app.use("/competitions", competitionsRouter);
 app.use("/dogs", dogsRouter)
 app.get("*", (req, res) => {
-  res.json({ ok: true });
-});
+  res.json({ ok: true })
+})
 
 /* START SERVER */
 
