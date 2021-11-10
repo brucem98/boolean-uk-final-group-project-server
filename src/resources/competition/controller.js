@@ -1,3 +1,4 @@
+const { competition } = require("../../utils/database");
 const prisma = require("../../utils/database");
 const getAll = async (req, res) => {
   try {
@@ -9,4 +10,19 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { getAll };
+const getOneById = async(req, res) => {
+    const competitionId = parseInt(req.params.id)
+    try {
+        const competitionData = await prisma.competition.findUnique({
+            where: {
+                id:competitionId
+            }
+        })
+        res.json(competitionData)
+    } catch (error) {
+        console.error("[ERROR] getAll: ", { error });
+        res.json({ error });   
+    }
+}
+
+module.exports = { getAll, getOneById };

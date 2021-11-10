@@ -1,9 +1,9 @@
-const express = require("express")
+const express = require("express");
 
-const {getAllDogs} = require("./controller")
+const { getAllDogs } = require("./controller");
 
 const router = express.Router();
 
-router.get("/", getAllDogs)
+router.get("/", getAllDogs);
 
 module.exports = router;
