@@ -1,4 +1,3 @@
-const { competition } = require("../../utils/database");
 const prisma = require("../../utils/database");
 const getAll = async (req, res) => {
   try {
