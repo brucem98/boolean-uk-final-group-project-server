@@ -2,7 +2,16 @@ const prisma = require("../../utils/database");
 
 const getAllDogs = async (req, res) => {
   try {
-    const data = await prisma.dog.findMany();
+    const data = await prisma.dog.findMany({
+        include: {
+            competitions: {
+              include: {
+                competition: true
+              }
+            }
+          }     
+    
+    });
     res.json({ data });
   } catch (error) {
     console.error({ error });
