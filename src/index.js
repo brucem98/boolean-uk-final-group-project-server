@@ -9,7 +9,8 @@ const app = express();
 /*IMPORT ROUTERS */
 
 const competitionsRouter = require("./resources/competition/router");
-const dogsRouter = require("./resources/dog/router")
+const dogsRouter = require("./resources/dog/router");
+const ticketsRouter = require("./resources/ticket/router");
 
 /* SETUP MIDDLEWARE */
 
@@ -22,8 +23,9 @@ app.use(morgan("dev"));
 
 /* SETUP ROUTES */
 
-app.use("/competition", competitionsRouter);
-app.use("/dogs", dogsRouter)
+app.use("/competitions", competitionsRouter);
+app.use("/dogs", dogsRouter);
+app.use("/tickets", ticketsRouter);
 app.get("*", (req, res) => {
   res.json({ ok: true })
 })
