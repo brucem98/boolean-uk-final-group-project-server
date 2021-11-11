@@ -43,7 +43,7 @@ model DogsOnCompetitions {
 model Ticket {
   id            Int         @id @default(autoincrement())
   price         Float
-  ticketnumber  Int
+  ticketNumber  Int
   Competition   Competition @relation(fields: [competitionId], references: [id])
   competitionId Int
 }
