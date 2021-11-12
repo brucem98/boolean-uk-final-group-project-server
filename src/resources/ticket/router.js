@@ -1,8 +1,8 @@
 const express = require("express");
 
-const { getAllTickets} = require("./controller");
+const { getAllTickets } = require("./controller");
 
-const router = express.Router();
+const router = express.Router()
 
 router.get("/", getAllTickets);
 
