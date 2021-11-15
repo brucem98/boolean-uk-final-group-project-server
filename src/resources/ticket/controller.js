@@ -68,5 +68,22 @@ const deleteById = async (req, res) => {
   }
 }
 
+const updateOneById = async (req, res) => {
+  console.log({params: req.params, body: req.body});
 
-module.exports = { getAllTickets, getCompetitionFromOneTicket, createTicket, deleteById };
+  const {id} = req.params;
+  try {
+    const ticketToUpdate = await prisma.ticket.update({
+      where: {id: parseInt(id)},
+      data: {...req.body},
+    });
+    res.json({data: ticketToUpdate});
+  } catch (error) {
+    console.error("[ERROR] updateOneById", {error});
+  }
+
+  res.json({error});
+}
+
+
+module.exports = { getAllTickets, getCompetitionFromOneTicket, createTicket, deleteById, updateOneById };
