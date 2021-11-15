@@ -44,7 +44,6 @@ model DogsOnCompetitions {
 
 model Ticket {
   id            Int         @id @default(autoincrement())
-  ticketNumber  Int
   firstName     String      @db.VarChar(255)
   lastName      String      @db.VarChar(255)
   email         String      @db.VarChar(255)
