@@ -52,4 +52,21 @@ function createTicket(req, res) {
     })
 }
 
-module.exports = { getAllTickets, getCompetitionFromOneTicket, createTicket };
+const deleteById = async (req, res) => {
+  console.log("req.params", req.params.id)
+  try {
+    const deleteById = await prisma.ticket.delete({
+      where: {
+        id: parseInt(req.params.id),
+      },
+    })
+    res.json({data: deleteById})
+  } catch (error) {
+    console.error({error})
+
+    res.status(500).json({error: error.message})
+  }
+}
+
+
+module.exports = { getAllTickets, getCompetitionFromOneTicket, createTicket, deleteById };
