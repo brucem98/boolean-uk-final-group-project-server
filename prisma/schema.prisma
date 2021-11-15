@@ -17,6 +17,7 @@ model Competition {
   location       String
   capacity       Int
   img            String
+  ticketPrice    Int                  @default(10)
   dogs           DogsOnCompetitions[]
   tickets        Ticket[]
 }
@@ -43,8 +44,11 @@ model DogsOnCompetitions {
 
 model Ticket {
   id            Int         @id @default(autoincrement())
-  price         Float
   ticketNumber  Int
+  firstName     String      @db.VarChar(255)
+  lastName      String      @db.VarChar(255)
+  email         String      @db.VarChar(255)
+  vaccinated    Boolean
   competition   Competition @relation(fields: [competitionId], references: [id])
   competitionId Int
 }
