@@ -1,17 +1,17 @@
 const prisma = require("../../utils/database");
+// const { connect } = require("../ticket/router");
 
 const getAllDogs = async (req, res) => {
   try {
     const data = await prisma.dog.findMany({
-        include: {
-            competitions: {
-              include: {
-                competition: true,
-              }
-            },
-            participant: true,
-          }     
-    
+      include: {
+        competitions: {
+          include: {
+            competition: true,
+          },
+        },
+        participant: true,
+      },
     });
     res.json({ data });
   } catch (error) {
@@ -21,30 +21,92 @@ const getAllDogs = async (req, res) => {
   }
 };
 
-function createOneDogAndParticipant(req,res){ 
-  console.log(req.body)
-  prisma.dog.create({
-    data: {
-        ...req.body,   // copies the keys and fills them with the corresponding req.body (ex: req.body.firstName) 
-        participant: {
-            create: {
-                  ...req.body.participant,                                // we're creating an object inside req.body
-                },  
+const getOneById = async (req, res) => {
+  const dogId = parseInt(req.params.id);
+  try {
+    const dogData = await prisma.dog.findUnique({
+      where: {
+        id: dogId,
+      },
+      include: {
+        competitions: {
+          include: {
+            competition: true,
           },
-          
+        },
+        participant: true,
       },
-      include : {
-          participant: true,
+    });
+    res.json(dogData);
+  } catch (error) {
+    console.error("[ERROR] getAll: ", { error });
+    res.json({ error });
+  }
+};
+
+async function createOneDogAndParticipant(req, res) {
+  console.log({ body: req.body });
+  const { name, age, breed, img, shotStatus } = req.body;
+  const { firstName, lastName, vaccinated } = req.body.participant;
+  try {
+    const result = await prisma.dog.create({
+      data: {
+        name,
+        age,
+        breed,
+        img,
+        shotStatus,
+        participant: {
+          create: {
+            firstName,
+            lastName,
+            age: req.body.participant.age,
+            vaccinated,
+          },
+        },
+        competitions: {
+          create: {
+            competition: {
+              connect: {
+                id: req.body.competitionId,
+              },
+            },
+          },
+        },
       },
-      })
-      .then((result)=>{
-          console.log(result)
-          res.json({data: result})
-      })
-      .catch(error=>{
-          console.error(error)
-          res.status(500).json(error)
-      })
+      include: {
+        participant: true,
+        competitions: true,
+      },
+    });
+    res.json({ data: result });
+  } catch (error) {
+    console.error({ error });
+    res.status(500).json({ error: error.message });
+  }
 }
 
-module.exports = { getAllDogs, createOneDogAndParticipant };
+const updateOneById = async (req, res) => {
+  console.log({ params: req.params, body: req.body });
+
+  const { id } = req.params;
+
+  try {
+    const dogToUpdate = await prisma.dog.update({
+      where: { id: parseInt(id) },
+      data: { ...req.body },
+    });
+    res.json({ data: dogToUpdate });
+  } catch (error) {
+    console.error("[ERROR] updateOneById", { error });
+
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getAllDogs,
+  createOneDogAndParticipant,
+  getOneById,
+  updateOneById,
+};
