@@ -35,22 +35,30 @@ const getCompetitionFromOneTicket = async (req, res) => {
   }
 }
 
-function createTicket(req, res) {
-  console.log(req.body)
-  prisma.ticket.create({
-    data: {
-      ...req.body,
-    },
-  })
-    .then((result) => {
-      console.log(result)
-      res.json({ data: result })
-    })
-    .catch(error => {
-      console.error(error)
-      res.status(500).json(error)
-    })
-}
+const createTicket = async (req, res) => {
+  console.log({body: req.body});
+
+  const {firstName, lastName, email, vaccinated} = req.body
+
+  try {
+    const newTicket = await prisma.ticket.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        vaccinated,
+        competition: {
+          connect: { id: req.body.competitionId },
+        } 
+      }       
+    });
+    res.json({ data: newTicket });
+  } catch (error) {
+    console.error("[ERROR] createOneRecipe: ", { error });
+    res.json({ error });
+  }
+};
+
 
 const deleteById = async (req, res) => {
   console.log("req.params", req.params.id)
@@ -72,6 +80,7 @@ const updateOneById = async (req, res) => {
   console.log({params: req.params, body: req.body});
 
   const {id} = req.params;
+
   try {
     const ticketToUpdate = await prisma.ticket.update({
       where: {id: parseInt(id)},
