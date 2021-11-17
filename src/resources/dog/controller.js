@@ -52,7 +52,7 @@ async function createOneDogAndParticipant(req, res) {
     const result = await prisma.dog.create({
       data: {
         name,
-        age: parseInt(petAge),
+        petAge: parseInt(petAge),
         breed,
         img,
         shotStatus,
