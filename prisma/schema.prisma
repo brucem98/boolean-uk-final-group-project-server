@@ -25,7 +25,7 @@ model Competition {
 model Dog {
   id           Int                  @id @default(autoincrement())
   name         String               @db.VarChar(255)
-  age          Int
+  petAge          Int              
   breed        String               @db.VarChar(255)
   img          String
   shotStatus   Boolean

@@ -46,13 +46,13 @@ const getOneById = async (req, res) => {
 
 async function createOneDogAndParticipant(req, res) {
   console.log({ body: req.body });
-  const { name, age, breed, img, shotStatus } = req.body;
+  const { name, petAge, breed, img, shotStatus } = req.body;
   const { firstName, lastName, vaccinated } = req.body.participant;
   try {
     const result = await prisma.dog.create({
       data: {
         name,
-        age,
+        age: parseInt(petAge),
         breed,
         img,
         shotStatus,
@@ -60,7 +60,7 @@ async function createOneDogAndParticipant(req, res) {
           create: {
             firstName,
             lastName,
-            age: req.body.participant.age,
+            age: parseInt(req.body.participant.age),
             vaccinated,
           },
         },
