@@ -108,13 +108,10 @@ const updateOneById = async (req, res) => {
 
 const deleteById = async (req, res) => {
   console.log("req.params", req.params.id);
-
-  const targetId = parseInt(req.params.id);
-
   try {
     const deleteById = await prisma.dog.delete({
       where: {
-        dogId: targetId,
+        id: parseInt(req.params.id),
       },
     });
     res.json({ data: deleteById });
