@@ -5,6 +5,7 @@ const {
   createOneDogAndParticipant,
   getOneById,
   updateOneById,
+  deleteById
 } = require("./controller");
 
 const router = express.Router();
@@ -16,5 +17,7 @@ router.post("/", createOneDogAndParticipant);
 router.get("/:id", getOneById);
 
 router.patch("/:id", updateOneById);
+
+router.delete("/:id", deleteById);
 
 module.exports = router;

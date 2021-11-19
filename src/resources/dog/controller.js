@@ -65,13 +65,15 @@ async function createOneDogAndParticipant(req, res) {
           },
         },
         competitions: {
-          create: {
-            competition: {
-              connect: {
-                id: req.body.competitionId,
+          create: [
+            {
+              competition: {
+                connect: {
+                  id: req.body.competitionId,
+                },
               },
             },
-          },
+          ],
         },
       },
       include: {
@@ -104,9 +106,29 @@ const updateOneById = async (req, res) => {
   }
 };
 
+const deleteById = async (req, res) => {
+  console.log("req.params", req.params.id);
+
+  const targetId = parseInt(req.params.id);
+
+  try {
+    const deleteById = await prisma.dog.delete({
+      where: {
+        dogId: targetId,
+      },
+    });
+    res.json({ data: deleteById });
+  } catch (error) {
+    console.error({ error });
+
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllDogs,
   createOneDogAndParticipant,
   getOneById,
   updateOneById,
+  deleteById,
 };
