@@ -19,7 +19,7 @@ const getOneById = async(req, res) => {
         })
         res.json(competitionData)
     } catch (error) {
-        console.error("[ERROR] getAll: ", { error });
+        console.error("[ERROR] getOneById: ", { error });
         res.json({ error });   
     }
 }
