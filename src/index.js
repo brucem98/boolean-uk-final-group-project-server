@@ -28,6 +28,7 @@ app.use("/competitions", competitionsRouter);
 app.use("/dogs", dogsRouter);
 app.use("/tickets", ticketsRouter);
 app.use("/participants", participantRouter);
+
 app.get("*", (req, res) => {
   res.json({ ok: true });
 });
