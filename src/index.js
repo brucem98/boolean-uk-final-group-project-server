@@ -12,6 +12,7 @@ const competitionsRouter = require("./resources/competition/router");
 const dogsRouter = require("./resources/dog/router");
 const ticketsRouter = require("./resources/ticket/router");
 const participantRouter = require("./resources/participant/router");
+
 /* SETUP MIDDLEWARE */
 
 app.disable("x-powered-by");
@@ -27,6 +28,7 @@ app.use("/competitions", competitionsRouter);
 app.use("/dogs", dogsRouter);
 app.use("/tickets", ticketsRouter);
 app.use("/participants", participantRouter);
+
 app.get("*", (req, res) => {
   res.json({ ok: true });
 });
