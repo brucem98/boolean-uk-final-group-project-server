@@ -9,19 +9,26 @@ const getAll = async (req, res) => {
   }
 };
 
-const getOneById = async(req, res) => {
-    const competitionId = parseInt(req.params.id)
-    try {
-        const competitionData = await prisma.competition.findUnique({
-            where: {
-                id:competitionId
-            }
-        })
-        res.json(competitionData)
-    } catch (error) {
-        console.error("[ERROR] getAll: ", { error });
-        res.json({ error });   
-    }
-}
+const getOneById = async (req, res) => {
+  const competitionId = parseInt(req.params.id);
+  try {
+    const competitionData = await prisma.competition.findUnique({
+      where: {
+        id: competitionId,
+      },
+      // include: {
+      //   dogs: {
+      //     include:{
+      //       dog: true,
+      //     }
+      //   }
+      // },
+    });
+    res.json(competitionData);
+  } catch (error) {
+    console.error("[ERROR] getAll: ", { error });
+    res.json({ error });
+  }
+};
 
 module.exports = { getAll, getOneById };
